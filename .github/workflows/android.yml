@@ -38,6 +38,12 @@ jobs:
             libpango1.0-dev \
             libxtst-dev
 
+
+      - name: Configure Android SDK
+        run: |
+         echo "ANDROID_HOME=/home/runner/.gluon/substrate/Android" >> $GITHUB_ENV
+         echo "ANDROID_SDK_ROOT=/home/runner/.gluon/substrate/Android" >> $GITHUB_ENV
+
       - name: Show Environment
         run: |
           echo "JAVA_HOME=$JAVA_HOME"
@@ -46,9 +52,6 @@ jobs:
           java -version
           javac -version
           mvn -version
-
-      - name: Print Dependency Tree
-        run: mvn dependency:tree || true
 
       - name: Package Artifact
         run: mvn -e -X -Pandroid gluonfx:build gluonfx:package

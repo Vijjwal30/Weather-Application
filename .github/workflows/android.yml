@@ -64,6 +64,7 @@ jobs:
           find target -type f 2>/dev/null | sort || true
 
       - name: Extract substrate
+        if: always()
         run: |
           mkdir substrate
           cd substrate

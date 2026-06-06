@@ -1,29 +1,30 @@
 name: Android Build
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+ push:
+  branches:
+     - main
+ workflow_dispatch:
 
 jobs:
 
-  build:
+   build:
 
     runs-on: ubuntu-latest
 
     steps:
 
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Setup GraalVM
+      - name: Setup Gluon GraalVM
         uses: gluonhq/setup-graalvm@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Linux Libraries
+      - name: Install Linux Dependencies
         run: |
-          sudo apt-get update
+         sudo apt-get update
 
           sudo apt-get install -y \
           libasound2-dev \
@@ -35,29 +36,48 @@ jobs:
           libpango1.0-dev \
           libxtst-dev
 
-      - name: Show Version
+      - name: Show Environment
         run: |
-              java -version
-              javac -version
-              mvn -version
+         echo "JAVA_HOME=$JAVA_HOME"
+         echo "GRAALVM_HOME=$GRAALVM_HOME"
 
-      - name: Build Android
-        run: |
-      - name: Maven Debug
-        run: |
-           mvn -X -Pandroid gluonfx:compile
+          java -version
+          javac -version
+          mvn -version
 
-      - name: Upload Gluon Logs
+      - name: Print Dependency Tree
+        run: |
+          mvn dependency:tree || true
+
+      - name: Print Project Structure
+        run: |
+         find . -type f | sort
+
+      - name: Run Gluon Compile Debug
+        run: |
+         mvn -e -X -Pandroid gluonfx:compile
+
+      - name: List Generated Files
+        if: always()
+        run: |
+          echo "===== TARGET ====="
+          find target -type f 2>/dev/null | sort || true
+
+      - name: Upload Entire Target Directory
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: gluon-logs
-          path: |
-            target/gluonfx/**/*.log
-            target/gluonfx/**/log/**
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+         name: target-directory
+         path: target
 
+      - name: Upload Logs Only
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
-          name: android-build
-          path: target/gluonfx/**/gvm/*
+            name: gluon-logs
+            path: |
+              target/**/*.log
+              target/**/log/**
+              target/**/*.txt
+              target/**/*.args
+              target/**/*.json

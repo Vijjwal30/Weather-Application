@@ -63,6 +63,12 @@ jobs:
           echo "===== TARGET ====="
           find target -type f 2>/dev/null | sort || true
 
+      - name: Extract substrate
+        run: |
+          mkdir substrate
+          cd substrate
+          jar xf ~/.m2/repository/com/gluonhq/substrate/0.0.68/substrate-0.0.68.jar
+          strings $(find . -type f) | grep ForceNoROSectionRelocations || true
       - name: Upload Entire Target Directory
         if: always()
         uses: actions/upload-artifact@v4

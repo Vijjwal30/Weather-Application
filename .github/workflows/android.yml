@@ -32,6 +32,12 @@ jobs:
           libpango1.0-dev \
           libxtst-dev
 
+      - name: Show Version
+        run: |
+              java -version
+              javac -version
+              mvn -version
+
       - name: Build Android
         run: |
           mvn -Pandroid \

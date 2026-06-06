@@ -1,6 +1,9 @@
 name: Android Build
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -41,6 +44,7 @@ jobs:
       - name: Build Android
         run: |
           mvn -Pandroid \
+          clean \
           gluonfx:build \
           gluonfx:package
 

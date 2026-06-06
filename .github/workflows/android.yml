@@ -51,7 +51,7 @@ jobs:
         run: mvn dependency:tree || true
 
       - name: Run Gluon Compile
-        run: mvn -Pandroid gluonfx:compile
+        run: mvn -Pandroid gluonfx:compile -H:+UnlockExperimentalVMOptions
         env:
           GRAALVM_HOME: ${{ env.GRAALVM_HOME }}
           ANDROID_HOME: ${{ env.ANDROID_HOME }}

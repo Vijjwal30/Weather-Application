@@ -71,7 +71,12 @@
                     </mainClass>
 
                     <target>${gluonfx.target}</target>
-
+                    <nativeImageArgs>
+                        <arg>-H:-ForceNoROSectionRelocations</arg>
+                    </nativeImageArgs>
+                    <runtimeArgs>
+                        <arg>-H:-ForceNoROSectionRelocations</arg>
+                    </runtimeArgs>
                 </configuration>
             </plugin>
 

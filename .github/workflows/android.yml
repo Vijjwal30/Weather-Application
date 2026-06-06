@@ -1,93 +1,66 @@
 name: Android Build
 
 on:
- push:
-  branches:
-     - main
- workflow_dispatch:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
-
-   build:
-
+  build:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Gluon GraalVM
         uses: gluonhq/setup-graalvm@master
         env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Java (Temurin for Maven)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
 
       - name: Install Linux Dependencies
         run: |
-         sudo apt-get update
-
+          sudo apt-get update
           sudo apt-get install -y \
-          libasound2-dev \
-          libavcodec-dev \
-          libavformat-dev \
-          libavutil-dev \
-          libgl-dev \
-          libgtk-3-dev \
-          libpango1.0-dev \
-          libxtst-dev
+            libasound2-dev \
+            libavcodec-dev \
+            libavformat-dev \
+            libavutil-dev \
+            libgl-dev \
+            libgtk-3-dev \
+            libpango1.0-dev \
+            libxtst-dev
 
       - name: Show Environment
         run: |
-         echo "JAVA_HOME=$JAVA_HOME"
-         echo "GRAALVM_HOME=$GRAALVM_HOME"
-
+          echo "JAVA_HOME=$JAVA_HOME"
+          echo "GRAALVM_HOME=$GRAALVM_HOME"
+          echo "ANDROID_HOME=$ANDROID_HOME"
           java -version
           javac -version
           mvn -version
 
       - name: Print Dependency Tree
-        run: |
-          mvn dependency:tree || true
+        run: mvn dependency:tree || true
 
-      - name: Print Project Structure
-        run: |
-         find . -type f | sort
+      - name: Run Gluon Compile
+        run: mvn -Pandroid gluonfx:compile
+        env:
+          GRAALVM_HOME: ${{ env.GRAALVM_HOME }}
+          ANDROID_HOME: ${{ env.ANDROID_HOME }}
 
-      - name: Extract substrate
-        if: always()
-        run: |
-          mkdir substrate
-          cd substrate
-          jar xf ~/.m2/repository/com/gluonhq/substrate/0.0.68/substrate-0.0.68.jar
-          strings $(find . -type f) | grep ForceNoROSectionRelocations || true
-          grep -R -a -n "ForceNoROSectionRelocations" .   
-
-      - name: Run Gluon Compile Debug
-        run: |
-         mvn -e -X -Pandroid gluonfx:compile
-
-      - name: List Generated Files
-        if: always()
-        run: |
-          echo "===== TARGET ====="
-          find target -type f 2>/dev/null | sort || true
-
-
-      - name: Upload Entire Target Directory
+      - name: Upload Logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-         name: target-directory
-         path: target
-
-      - name: Upload Logs Only
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-            name: gluon-logs
-            path: |
-              target/**/*.log
-              target/**/log/**
-              target/**/*.txt
-              target/**/*.args
-              target/**/*.json
+          name: gluon-logs
+          path: |
+            target/**/*.log
+            target/**/log/**

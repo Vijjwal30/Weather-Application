@@ -51,7 +51,7 @@ jobs:
         run: mvn dependency:tree || true
 
       - name: Package Artifact
-        run: mvn -Pandroid gluonfx:build gluonfx:package
+        run: mvn -e -X -Pandroid gluonfx:build gluonfx:package
         env:
           GRAALVM_HOME: ${{ env.GRAALVM_HOME }}
           ANDROID_HOME: ${{ env.ANDROID_HOME }}
@@ -61,3 +61,27 @@ jobs:
         with:
           name: android-package
           path: target/gluonfx/**/gvm/*.apk
+      - name: List Generated Files
+        if: always()
+        run: |
+         echo "===== TARGET ====="
+         find target -type f 2>/dev/null | sort || true
+
+      - name: Upload Full Target Directory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: target-directory
+          path: target
+
+      - name: Upload Gluon Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+         name: gluon-logs
+         path: |
+           target/**/*.log
+           target/**/log/**
+           target/**/*.txt
+           target/**/*.args
+           target/**/*.json

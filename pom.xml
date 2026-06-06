@@ -72,10 +72,10 @@
 
                     <target>${gluonfx.target}</target>
                     <nativeImageArgs>
-                        <arg>-H:-ForceNoROSectionRelocations</arg>
+                        <arg>-H:+UnlockExperimentalVMOptions</arg>
                     </nativeImageArgs>
                     <runtimeArgs>
-                        <arg>-H:-ForceNoROSectionRelocations</arg>
+                        <arg>-H:+UnlockExperimentalVMOptions</arg>
                     </runtimeArgs>
                 </configuration>
             </plugin>

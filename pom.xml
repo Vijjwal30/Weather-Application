@@ -12,7 +12,7 @@
 
         <java.version>24</java.version>
         <javafx.version>26</javafx.version>
-        <gluonfx.version>1.0.28</gluonfx.version>
+        <gluonfx.version>1.0.27</gluonfx.version>
 
         <main.class>
             com.weather.Launcher

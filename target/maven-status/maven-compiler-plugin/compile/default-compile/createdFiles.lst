@@ -1,3 +1,4 @@
 com\weather\App.class
+com\weather\utilities\GradientBuilder.class
 module-info.class
 com\weather\Launcher.class

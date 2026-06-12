@@ -1,8 +1,13 @@
 .root{
-  -fx-background-color: #121212;
+  -fx-background-color:
+          linear-gradient(
+          to top left
+          rgba(233, 233, 245, 1.0) 1%,
+          rgba(235, 235, 240, 1.0) 53%,
+          rgba(142, 216, 245, 1.0) 100%);
 }
 
 .label{
-  -fx-text-fill: white;
+  -fx-text-fill: #1f0505;
   -fx-font-size: 24px;
 }

@@ -58,10 +58,12 @@ jobs:
 
       # Modified: Injects the dynamic target architecture via the command line argument
       - name: Package Artifact
-        run: mvn -e -X -Pandroid gluonfx:build gluonfx:package -Dgluonfx.targetArch=${{ matrix.arch }}
+        # Force Maven to use the exact GraalVM executable binary
+        run: $GRAALVM_HOME/bin/mvn -e -X -Pandroid gluonfx:build gluonfx:package -Dgluonfx.targetArch=${{ matrix.arch }}
         env:
           GRAALVM_HOME: ${{ env.GRAALVM_HOME }}
           ANDROID_HOME: ${{ env.ANDROID_HOME }}
+
 
       # Modified: Appends the architecture name so separate APK files are produced
       - name: Upload artifact

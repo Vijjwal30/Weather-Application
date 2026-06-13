@@ -18,34 +18,16 @@ jobs:
           - arch: x86_64
             os-runner: ubuntu-latest
           - arch: aarch64
-            os-runner: ubuntu-24.04-arm
+            os-runner: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Step A: Run standard installer ONLY on the x86_64 runner
-      - name: Setup Gluon GraalVM (x86_64)
-        if: matrix.arch == 'x86_64'
+      - name: Setup Gluon GraalVM
         uses: gluonhq/setup-graalvm@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Step B: Manually fetch native ARM64 bits ONLY on the aarch64 runner
-      - name: Setup Gluon GraalVM (aarch64 Native)
-        if: matrix.arch == 'aarch64'
-        run: |
-          cd $HOME
-          # Fixed: URL-encoded the '+' character to '%2B' inside the release tag path
-          curl -L -o gluon-graalvm-arm.tar.gz https://github.com
-          tar -xzf gluon-graalvm-arm.tar.gz
-
-          # Inject native paths to override system profiles
-          echo "GRAALVM_HOME=$HOME/graalvm-svm-java23-23+25.1-dev" >> $GITHUB_ENV
-          echo "JAVA_HOME=$HOME/graalvm-svm-java23-23+25.1-dev" >> $GITHUB_ENV
-          echo "$HOME/graalvm-svm-java23-23+25.1-dev/bin" >> $GITHUB_PATH
-      
-      
 
       - name: Install Linux Dependencies
         run: |

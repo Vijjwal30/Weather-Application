@@ -79,6 +79,7 @@
                     <mainClass>
                         ${main.class}
                     </mainClass>
+                    <graalvmHome>E:\Program Files\Graalvm\graalvm-java23-windows-amd64-gluon-23+25.1-dev</graalvmHome>
 
                     <target>${gluonfx.target}</target>
                     <nativeImageArgs>

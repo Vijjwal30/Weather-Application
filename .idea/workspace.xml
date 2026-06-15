@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0eb69c2f-0549-4a8a-8050-37227d398abe" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/android.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/android.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/weather/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/weather/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/weather/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/weather/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/weather/Launcher.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/weather/Launcher.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

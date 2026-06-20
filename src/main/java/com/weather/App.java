@@ -24,12 +24,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class App extends Application {
     double width,height;
-    boolean isAndroid = false;
+    boolean isAndroid = true;
 
 
     @Override
     public void start(Stage stage) {
-        Label label = new Label("JavaFX 26 + Gluon Mobile");
+        Label label = new Label("JavaFX 25 + Gluon Mobile");
 
         label.setFont(new Font(20));
         label.setTextFill(Color.ALICEBLUE);

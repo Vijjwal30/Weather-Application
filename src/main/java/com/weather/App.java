@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class App extends Application {
     double width,height;
-    boolean isAndroid = true;
+    boolean isAndroid = false;
 
 
     @Override
@@ -43,7 +43,7 @@ public class App extends Application {
                                 .setAngle(-90)
                                 .addStops(
                                         new Stop(0.5,Color.BLACK),
-                                        new Stop(1,Color.valueOf("#434343"))
+                                        new Stop(1,Color.valueOf("434343"))
                                 )
                                 .build(), null,null
                 )
